@@ -23,21 +23,30 @@ public class PlaneServiceDB implements PlaneService{
 
 	@Override
 	public List<Plane> getAllPlanes() {
-		return null;
+		return this.repo.findAll();
 	}
 
 	@Override
 	public Plane getById(int id) {
-		return null;
+		return this.repo.findById(id).get();
 	}
 
 	@Override
 	public Plane updatePlane(int id, String name, Integer size, Double cost) {
-		return null;
+		Plane toUpdate = this.getById(id);
+
+		if (name != null && !name.isBlank())
+			toUpdate.setName(name);
+		if (size != null)
+			toUpdate.setSize(size);
+		if (cost != null)
+			toUpdate.setCost(cost);
+
+		return this.repo.save(toUpdate);
 	}
 
 	@Override
 	public void delete(int id) {
-
+		this.repo.deleteById(id);
 	}
 }
